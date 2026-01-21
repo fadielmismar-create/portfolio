@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENTA-TECH | Studio Dentistico Avanzato Lugano</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'pure': '#FFFFFF',
+                        'cyan-light': '#F0F9FF',
+                        'medical-blue': '#0077B6',
+                        'soft-red': '#EF4444',
+                    },
+                    borderRadius: {
+                        'clinical': '12px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #1F2937;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Smooth Fade Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Clinical Shadows - Almost Invisible */
+        .clinical-shadow {
+            box-shadow: 0 2px 8px rgba(0, 119, 182, 0.04);
+        }
+
+        .clinical-shadow-hover {
+            transition: all 0.3s ease;
+        }
+
+        .clinical-shadow-hover:hover {
+            box-shadow: 0 8px 24px rgba(0, 119, 182, 0.08);
+            transform: translateY(-4px);
+        }
+
+        /* Header Blur */
+        header {
+            backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Testimonial Slider */
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+
+        /* File Upload Styling */
+        .file-upload-area {
+            border: 2px dashed #E5E7EB;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area:hover {
+            border-color: #0077B6;
+            background-color: #F0F9FF;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .emergency-mobile {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 100;
+                box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SMART HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-6 md:px-12 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-medical-blue rounded-clinical flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-semibold text-gray-900">DENTA-TECH</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#specialita"
+                        class="text-sm font-medium text-gray-700 hover:text-medical-blue transition-colors">Specialità</a>
+                    <a href="#studio"
+                        class="text-sm font-medium text-gray-700 hover:text-medical-blue transition-colors">Studio</a>
+                    <a href="#tecnologia"
+                        class="text-sm font-medium text-gray-700 hover:text-medical-blue transition-colors">Tecnologia</a>
+                    <a href="#contatti"
+                        class="text-sm font-medium text-gray-700 hover:text-medical-blue transition-colors">Contatti</a>
+                    <a href="tel:+41912345678"
+                        class="bg-soft-red text-white px-6 py-2.5 rounded-clinical text-sm font-medium hover:bg-red-600 transition-all">
+                        URGENZE
+                    </a>
+                    <button onclick="openBooking()"
+                        class="bg-medical-blue text-white px-6 py-2.5 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all">
+                        PRENOTA VISITA
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Emergency Button (Fixed) -->
+    <a href="tel:+41912345678"
+        class="md:hidden emergency-mobile bg-soft-red text-white px-6 py-4 rounded-full text-sm font-bold shadow-lg">
+        🚨 URGENZE
+    </a>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white z-[100] transform translate-x-full transition-transform duration-300">
+        <div class="flex flex-col h-full">
+            <div class="flex items-center justify-between p-6 border-b border-gray-100">
+                <span class="text-xl font-semibold text-gray-900">DENTA-TECH</span>
+                <button onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-6 p-6">
+                <a href="tel:+41912345678" onclick="toggleMobileMenu()"
+                    class="bg-soft-red text-white px-6 py-4 rounded-clinical text-center font-bold">
+                    🚨 URGENZE
+                </a>
+                <a href="#specialita" onclick="toggleMobileMenu()"
+                    class="text-lg font-medium text-gray-700">Specialità</a>
+                <a href="#studio" onclick="toggleMobileMenu()" class="text-lg font-medium text-gray-700">Studio</a>
+                <a href="#tecnologia" onclick="toggleMobileMenu()"
+                    class="text-lg font-medium text-gray-700">Tecnologia</a>
+                <a href="#contatti" onclick="toggleMobileMenu()" class="text-lg font-medium text-gray-700">Contatti</a>
+                <button onclick="openBooking(); toggleMobileMenu();"
+                    class="bg-medical-blue text-white px-6 py-4 rounded-clinical text-center font-medium">
+                    PRENOTA VISITA
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-20 bg-cyan-light">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1920&q=80" alt="Sorriso Naturale"
+                class="w-full h-full object-cover opacity-30">
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 md:px-12 py-32">
+            <div class="max-w-4xl fade-in">
+                <div
+                    class="inline-block bg-medical-blue text-white px-4 py-2 rounded-clinical text-xs font-medium mb-8">
+                    TECNOLOGIA DENTALE AVANZATA
+                </div>
+                <h1 class="hero-title text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
+                    La Tecnologia<br>incontra il<br><span class="text-medical-blue">Sorriso</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 font-light mb-12 leading-relaxed max-w-2xl">
+                    Cure dentali di eccellenza con le tecnologie più avanzate. Scanner 3D, laser di ultima generazione e
+                    un team di specialisti al vostro servizio.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="openBooking()"
+                        class="bg-medical-blue text-white px-10 py-5 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all clinical-shadow">
+                        PRENOTA UNA VISITA
+                    </button>
+                    <a href="#specialita"
+                        class="border-2 border-medical-blue text-medical-blue px-10 py-5 rounded-clinical text-sm font-medium hover:bg-medical-blue hover:text-white transition-all text-center">
+                        SCOPRI LE SPECIALITÀ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIALITÀ GRID -->
+    <section id="specialita" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Le Nostre Specialità</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Soluzioni complete per ogni esigenza odontoiatrica
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Specialty 1 -->
+                <div class="bg-cyan-light p-8 rounded-clinical clinical-shadow-hover">
+                    <div class="w-16 h-16 bg-medical-blue/10 rounded-clinical flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-medical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Implantologia Digitale</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Impianti dentali con pianificazione 3D e chirurgia guidata per risultati precisi e predicibili.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Scanner 3D intraorali
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Chirurgia guidata
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Garanzia a vita
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Specialty 2 -->
+                <div class="bg-cyan-light p-8 rounded-clinical clinical-shadow-hover">
+                    <div class="w-16 h-16 bg-medical-blue/10 rounded-clinical flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-medical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Estetica Dentale</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Sbiancamento professionale, faccette e restauri estetici per un sorriso perfetto e naturale.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Sbiancamento laser
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Faccette in ceramica
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Smile design digitale
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Specialty 3 -->
+                <div class="bg-cyan-light p-8 rounded-clinical clinical-shadow-hover">
+                    <div class="w-16 h-16 bg-medical-blue/10 rounded-clinical flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-medical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Ortodonzia Invisibile</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Allineatori trasparenti personalizzati per raddrizzare i denti senza apparecchi metallici.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Invisalign certificato
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Simulazione 3D
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Controlli mensili
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Specialty 4 -->
+                <div class="bg-cyan-light p-8 rounded-clinical clinical-shadow-hover">
+                    <div class="w-16 h-16 bg-medical-blue/10 rounded-clinical flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-medical-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Prevenzione</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Igiene professionale e controlli periodici per mantenere la salute orale nel tempo.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Pulizia professionale
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Fluoroprofilassi
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-medical-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Screening oncologico
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGY SECTION -->
+    <section id="tecnologia" class="py-20 md:py-32 bg-cyan-light">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Tecnologia all'Avanguardia</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Investiamo costantemente nelle tecnologie più avanzate per garantire cure precise e confortevoli
+                </p>
+            </div>
+
+            <div class="space-y-20">
+                <!-- Tech 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div
+                            class="inline-block bg-medical-blue text-white px-4 py-2 rounded-clinical text-xs font-medium mb-6">
+                            DIAGNOSTICA AVANZATA
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-6">Scanner 3D Intraorale</h3>
+                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                            Impronte digitali precise e confortevoli senza paste tradizionali. La tecnologia di
+                            scansione 3D permette di visualizzare immediatamente la situazione dentale e pianificare il
+                            trattamento con precisione millimetrica.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Massimo comfort per il paziente</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Precisione assoluta nelle misurazioni</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Visualizzazione immediata del risultato</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-clinical clinical-shadow">
+                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80"
+                            alt="Scanner 3D" class="w-full h-80 object-cover rounded-clinical">
+                    </div>
+                </div>
+
+                <!-- Tech 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="md:order-2">
+                        <div
+                            class="inline-block bg-medical-blue text-white px-4 py-2 rounded-clinical text-xs font-medium mb-6">
+                            CHIRURGIA LASER
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-6">Laser Odontoiatrico</h3>
+                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                            Trattamenti mini-invasivi con laser di ultima generazione per interventi precisi, rapidi e
+                            con recupero immediato. Ideale per chirurgia gengivale, sbiancamento e trattamenti
+                            parodontali.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Nessun dolore post-operatorio</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Guarigione rapida e naturale</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-medical-blue mr-3 mt-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>Sterilizzazione automatica</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="md:order-1 bg-white p-8 rounded-clinical clinical-shadow">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80"
+                            alt="Laser Dentale" class="w-full h-80 object-cover rounded-clinical">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF - Testimonials -->
+    <section id="studio" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Cosa Dicono i Nostri Pazienti</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    La fiducia dei nostri pazienti è il nostro miglior risultato
+                </p>
+            </div>
+
+            <div class="testimonial-slider gap-6 pb-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card w-full md:w-96 bg-cyan-light p-8 rounded-clinical clinical-shadow">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-12 h-12 bg-medical-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            MC
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Maria Colombo</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Professionalità eccezionale. Ho fatto un impianto con lo scanner 3D e il risultato è perfetto.
+                        Nessun dolore e tempi rapidissimi. Consiglio vivamente!"
+                    </p>
+                    <div class="mt-4 text-xs text-gray-500">
+                        Verificato • Implantologia
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card w-full md:w-96 bg-cyan-light p-8 rounded-clinical clinical-shadow">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-12 h-12 bg-medical-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            LR
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Luca Rossi</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Finalmente uno studio dentistico moderno! L'ortodonzia invisibile ha cambiato il mio sorriso
+                        senza che nessuno se ne accorgesse. Team fantastico."
+                    </p>
+                    <div class="mt-4 text-xs text-gray-500">
+                        Verificato • Ortodonzia
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card w-full md:w-96 bg-cyan-light p-8 rounded-clinical clinical-shadow">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-12 h-12 bg-medical-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            SF
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Sofia Ferrari</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Sbiancamento laser incredibile! Risultato naturale e duraturo. Lo studio è pulitissimo e il
+                        personale molto gentile. Tornerò sicuramente."
+                    </p>
+                    <div class="mt-4 text-xs text-gray-500">
+                        Verificato • Estetica
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card w-full md:w-96 bg-cyan-light p-8 rounded-clinical clinical-shadow">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-12 h-12 bg-medical-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            AB
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Andrea Bianchi</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed italic">
+                        "Avevo paura del dentista, ma qui mi hanno messo completamente a mio agio. Tecnologie moderne e
+                        zero dolore. Grazie di cuore!"
+                    </p>
+                    <div class="mt-4 text-xs text-gray-500">
+                        Verificato • Prevenzione
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING MODAL -->
+    <div id="booking-modal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-clinical max-w-2xl w-full max-h-[90vh] overflow-y-auto clinical-shadow">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-clinical">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-2xl font-bold text-gray-900">Prenota una Visita</h3>
+                    <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Progress Steps -->
+                <div class="flex items-center justify-between mt-6">
+                    <div class="flex items-center flex-1">
+                        <div id="step-indicator-1"
+                            class="w-8 h-8 rounded-full bg-medical-blue text-white flex items-center justify-center text-sm font-bold">
+                            1</div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2">
+                            <div id="progress-1" class="h-full bg-medical-blue transition-all duration-300"
+                                style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center flex-1">
+                        <div id="step-indicator-2"
+                            class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold">
+                            2</div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2">
+                            <div id="progress-2" class="h-full bg-medical-blue transition-all duration-300"
+                                style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div id="step-indicator-3"
+                            class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold">
+                            3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-8">
+                <!-- Step 1: Servizio e Data -->
+                <div id="booking-step-1" class="booking-step">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-6">Seleziona Servizio e Data</h4>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipo di Trattamento *</label>
+                        <select id="treatment-type" required
+                            class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                            <option value="">Seleziona...</option>
+                            <option value="implantologia">Implantologia Digitale</option>
+                            <option value="estetica">Estetica Dentale</option>
+                            <option value="ortodonzia">Ortodonzia Invisibile</option>
+                            <option value="prevenzione">Controllo/Pulizia</option>
+                            <option value="urgenza">Urgenza/Dolore</option>
+                            <option value="altro">Altro</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Data Preferita *</label>
+                            <input type="date" id="preferred-date" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Orario Preferito *</label>
+                            <select id="preferred-time" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                                <option value="">Seleziona...</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Note Aggiuntive</label>
+                        <textarea id="notes" rows="3"
+                            class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none resize-none"></textarea>
+                    </div>
+
+                    <button onclick="goToStep(2)"
+                        class="w-full bg-medical-blue text-white py-4 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all">
+                        CONTINUA
+                    </button>
+                </div>
+
+                <!-- Step 2: Dati Personali -->
+                <div id="booking-step-2" class="booking-step hidden">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-6">Dati Personali</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
+                            <input type="text" id="first-name" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cognome *</label>
+                            <input type="text" id="last-name" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Telefono *</label>
+                            <input type="tel" id="phone" required
+                                class="w-full border border-gray-300 rounded-clinical px-4 py-3 text-sm focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all outline-none">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="goToStep(1)"
+                            class="flex-1 border-2 border-gray-300 text-gray-700 py-4 rounded-clinical text-sm font-medium hover:bg-gray-50 transition-all">
+                            INDIETRO
+                        </button>
+                        <button onclick="goToStep(3)"
+                            class="flex-1 bg-medical-blue text-white py-4 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all">
+                            CONTINUA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Carica Documenti e Conferma -->
+                <div id="booking-step-3" class="booking-step hidden">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-6">Documenti e Conferma</h4>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Carica Foto o Radiografia
+                            (Opzionale)</label>
+                        <div class="file-upload-area rounded-clinical p-8 text-center cursor-pointer">
+                            <input type="file" id="file-upload-modal" accept="image/*,.pdf" class="hidden"
+                                onchange="handleModalFileUpload(event)">
+                            <label for="file-upload-modal" class="cursor-pointer">
+                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <p class="text-sm text-gray-600 mb-1">Clicca per caricare o trascina qui</p>
+                                <p class="text-xs text-gray-500">PNG, JPG, PDF fino a 10MB</p>
+                            </label>
+                            <div id="file-name-modal" class="mt-4 text-sm text-medical-blue font-medium hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyan-light p-6 rounded-clinical mb-6">
+                        <h5 class="font-semibold text-gray-900 mb-4">Riepilogo Prenotazione</h5>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <div class="flex justify-between">
+                                <span>Trattamento:</span>
+                                <span id="summary-treatment" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Data:</span>
+                                <span id="summary-date" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Orario:</span>
+                                <span id="summary-time" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Paziente:</span>
+                                <span id="summary-patient" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="flex items-start">
+                            <input type="checkbox" id="privacy-consent" required class="mt-1 mr-3 rounded">
+                            <span class="text-xs text-gray-600 leading-relaxed">
+                                Acconsento al trattamento dei miei dati personali secondo la normativa sulla privacy e
+                                dichiaro di aver letto l'informativa *
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="goToStep(2)"
+                            class="flex-1 border-2 border-gray-300 text-gray-700 py-4 rounded-clinical text-sm font-medium hover:bg-gray-50 transition-all">
+                            INDIETRO
+                        </button>
+                        <button onclick="submitBooking()"
+                            class="flex-1 bg-medical-blue text-white py-4 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all">
+                            CONFERMA PRENOTAZIONE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT SECTION (Quick Info) -->
+    <section id="contatti" class="py-20 md:py-32 bg-cyan-light">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Contattaci</h2>
+                <p class="text-lg text-gray-600 mb-12">
+                    Siamo qui per prenderci cura del tuo sorriso
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-8 rounded-clinical clinical-shadow">
+                        <svg class="w-12 h-12 text-medical-blue mx-auto mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <h4 class="font-semibold text-gray-900 mb-2">Telefono</h4>
+                        <p class="text-gray-600">+41 91 234 56 78</p>
+                        <p class="text-xs text-soft-red mt-2">Urgenze 24/7</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-clinical clinical-shadow">
+                        <svg class="w-12 h-12 text-medical-blue mx-auto mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <h4 class="font-semibold text-gray-900 mb-2">Email</h4>
+                        <p class="text-gray-600">info@dentatech.ch</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-clinical clinical-shadow">
+                        <svg class="w-12 h-12 text-medical-blue mx-auto mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <h4 class="font-semibold text-gray-900 mb-2">Indirizzo</h4>
+                        <p class="text-gray-600">Via Nassa 42<br>6900 Lugano</p>
+                    </div>
+                </div>
+
+                <button onclick="openBooking()"
+                    class="bg-medical-blue text-white px-12 py-5 rounded-clinical text-sm font-medium hover:bg-blue-700 transition-all clinical-shadow">
+                    PRENOTA UNA VISITA
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Column 1: Brand -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-medical-blue rounded-clinical flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-xl font-semibold">DENTA-TECH</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Studio dentistico all'avanguardia nel cuore di Lugano
+                    </p>
+                </div>
+
+                <!-- Column 2: Links -->
+                <div>
+                    <h4 class="text-sm font-semibold mb-4 tracking-wide">SERVIZI</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#specialita" class="hover:text-white transition-colors">Implantologia</a></li>
+                        <li><a href="#specialita" class="hover:text-white transition-colors">Estetica Dentale</a></li>
+                        <li><a href="#specialita" class="hover:text-white transition-colors">Ortodonzia</a></li>
+                        <li><a href="#specialita" class="hover:text-white transition-colors">Prevenzione</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Orari -->
+                <div>
+                    <h4 class="text-sm font-semibold mb-4 tracking-wide">ORARI</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>Lunedì - Venerdì: 08:00 - 19:00</li>
+                        <li>Sabato: 09:00 - 13:00</li>
+                        <li>Domenica: Chiuso</li>
+                        <li class="pt-2 text-soft-red font-medium">Urgenze 24/7</li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contatti -->
+                <div>
+                    <h4 class="text-sm font-semibold mb-4 tracking-wide">CONTATTI</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>Via Nassa 42</li>
+                        <li>6900 Lugano, Svizzera</li>
+                        <li class="pt-2">+41 91 234 56 78</li>
+                        <li>info@dentatech.ch</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs text-gray-500">
+                        © 2026 DENTA-TECH. Tutti i diritti riservati.
+                    </p>
+                    <div class="flex gap-6 text-xs text-gray-500">
+                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                        <a href="#" class="hover:text-white transition-colors">Termini e Condizioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Open Booking Modal
+        function openBooking() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            goToStep(1); // Reset to first step
+        }
+
+        // Close Booking Modal
+        function closeBookingModal() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            resetBookingForm();
+        }
+
+        // Navigate Between Steps
+        let currentStep = 1;
+
+        function goToStep(step) {
+            // Validate current step before proceeding
+            if (step > currentStep && !validateStep(currentStep)) {
+                return;
+            }
+
+            // Hide all steps
+            document.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
+            
+            // Show target step
+            document.getElementById(`booking-step-${step}`).classList.remove('hidden');
+            
+            // Update progress indicators
+            updateProgressIndicators(step);
+            
+            // Update summary if going to step 3
+            if (step === 3) {
+                updateSummary();
+            }
+            
+            currentStep = step;
+        }
+
+        // Validate Step
+        function validateStep(step) {
+            if (step === 1) {
+                const treatment = document.getElementById('treatment-type').value;
+                const date = document.getElementById('preferred-date').value;
+                const time = document.getElementById('preferred-time').value;
+                
+                if (!treatment || !date || !time) {
+                    alert('Per favore, compila tutti i campi obbligatori.');
+                    return false;
+                }
+            } else if (step === 2) {
+                const firstName = document.getElementById('first-name').value;
+                const lastName = document.getElementById('last-name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!firstName || !lastName || !email || !phone) {
+                    alert('Per favore, compila tutti i campi obbligatori.');
+                    return false;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Per favore, inserisci un indirizzo email valido.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Update Progress Indicators
+        function updateProgressIndicators(step) {
+            // Reset all indicators
+            for (let i = 1; i <= 3; i++) {
+                const indicator = document.getElementById(`step-indicator-${i}`);
+                const progress = document.getElementById(`progress-${i}`);
+                
+                if (i < step) {
+                    // Completed step
+                    indicator.classList.remove('bg-gray-200', 'text-gray-500');
+                    indicator.classList.add('bg-medical-blue', 'text-white');
+                    if (progress) progress.style.width = '100%';
+                } else if (i === step) {
+                    // Current step
+                    indicator.classList.remove('bg-gray-200', 'text-gray-500');
+                    indicator.classList.add('bg-medical-blue', 'text-white');
+                    if (progress) progress.style.width = '0%';
+                } else {
+                    // Future step
+                    indicator.classList.remove('bg-medical-blue', 'text-white');
+                    indicator.classList.add('bg-gray-200', 'text-gray-500');
+                    if (progress) progress.style.width = '0%';
+                }
+            }
+        }
+
+        // Update Summary
+        function updateSummary() {
+            const treatment = document.getElementById('treatment-type');
+            const date = document.getElementById('preferred-date').value;
+            const time = document.getElementById('preferred-time').value;
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            
+            document.getElementById('summary-treatment').textContent = treatment.options[treatment.selectedIndex].text;
+            document.getElementById('summary-date').textContent = new Date(date).toLocaleDateString('it-IT', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            document.getElementById('summary-time').textContent = time;
+            document.getElementById('summary-patient').textContent = `${firstName} ${lastName}`;
+        }
+
+        // Handle Modal File Upload
+        function handleModalFileUpload(event) {
+            const file = event.target.files[0];
+            const fileName = document.getElementById('file-name-modal');
+            
+            if (file) {
+                fileName.textContent = `✓ File caricato: ${file.name}`;
+                fileName.classList.remove('hidden');
+            }
+        }
+
+        // Submit Booking
+        function submitBooking() {
+            const consent = document.getElementById('privacy-consent').checked;
+            
+            if (!consent) {
+                alert('Per favore, accetta il trattamento dei dati personali per procedere.');
+                return;
+            }
+            
+            // Show success message
+            alert('Grazie per la prenotazione! Ti contatteremo entro 24 ore per confermare l\'appuntamento.');
+            
+            // Close modal and reset
+            closeBookingModal();
+        }
+
+        // Reset Booking Form
+        function resetBookingForm() {
+            document.getElementById('treatment-type').value = '';
+            document.getElementById('preferred-date').value = '';
+            document.getElementById('preferred-time').value = '';
+            document.getElementById('notes').value = '';
+            document.getElementById('first-name').value = '';
+            document.getElementById('last-name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('privacy-consent').checked = false;
+            document.getElementById('file-name-modal').classList.add('hidden');
+            currentStep = 1;
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('booking-modal');
+                if (!modal.classList.contains('hidden')) {
+                    closeBookingModal();
+                }
+            }
+        });
+
+        // Close modal on backdrop click
+        document.getElementById('booking-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'booking-modal') {
+                closeBookingModal();
+            }
+        });
+
+        // Set minimum date to today
+        const dateInput = document.getElementById('preferred-date');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage Ticino | L'eccellenza meccanica nel cuore di Lugano</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ice': '#FFFFFF',
+                        'anthracite': '#1a1a1a',
+                        'electric-blue': '#005BFF',
+                        'light-gray': '#f8f9fa',
+                        'medium-dark': '#2d2d2d',
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Ken Burns Effect */
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=2000') center/cover no-repeat;
+            animation: kenBurns 30s ease-out infinite alternate;
+        }
+
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.7) 0%, rgba(0, 91, 255, 0.3) 100%);
+            z-index: 1;
+        }
+
+        /* Ghost Text */
+        .ghost-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(8rem, 20vw, 18rem);
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            text-stroke: 1px rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.1em;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        /* Scanline Effect */
+        .scanlines {
+            position: relative;
+        }
+
+        .scanlines::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Liquid Fill Button */
+        .btn-liquid {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-liquid::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: #005BFF;
+            transition: width 0.5s ease-out;
+            z-index: -1;
+        }
+
+        .btn-liquid:hover::before {
+            width: 100%;
+        }
+
+        .btn-liquid {
+            border: 2px solid #005BFF;
+            background: transparent;
+            color: #005BFF;
+        }
+
+        .btn-liquid:hover {
+            color: #FFFFFF;
+        }
+
+        /* Gradient Borders */
+        .gradient-border {
+            border: 2px solid transparent;
+            background-image: linear-gradient(#1a1a1a, #1a1a1a),
+                linear-gradient(135deg, #005BFF, transparent);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .gradient-border-light {
+            border: 2px solid transparent;
+            background-image: linear-gradient(#FFFFFF, #FFFFFF),
+                linear-gradient(135deg, #005BFF, rgba(0, 91, 255, 0.3));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        /* Filter Animation */
+        .vehicle-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .vehicle-card.hidden {
+            opacity: 0;
+            transform: scale(0.9);
+            height: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Animated Icons */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .icon-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .icon-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Badge Styles */
+        .badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .badge-available {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-incoming {
+            background: #f59e0b;
+            color: white;
+        }
+
+        /* Card Hover */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 91, 255, 0.15);
+        }
+
+        /* Icon Transition */
+        .icon-transition {
+            transition: stroke 0.3s ease, fill 0.3s ease;
+        }
+
+        .card-hover:hover .icon-transition {
+            stroke: #005BFF;
+            fill: #005BFF;
+        }
+
+        /* Navbar */
+        .navbar-scrolled {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Section Transitions */
+        .section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #005BFF;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0047cc;
+        }
+
+        /* Image Zoom */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+
+        .img-zoom {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .img-zoom-container:hover .img-zoom {
+            transform: scale(1.1);
+        }
+
+        /* Vehicle Card Equal Height - FIXED */
+        .vehicle-card {
+            height: 450px;
+        }
+
+        @media (min-width: 768px) {
+            .vehicle-card {
+                height: 380px;
+            }
+        }
+
+        .vehicle-card .img-zoom-container {
+            height: 100%;
+        }
+
+        .vehicle-card .img-zoom {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Mobile Carousel */
+        @media (max-width: 768px) {
+            .showroom-container {
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .vehicle-card {
+                scroll-snap-align: start;
+                min-width: 100%;
+            }
+        }
+
+        /* --- SMART BOOKING MODAL CSS --- */
+        .modal-backdrop {
+            background: rgba(26, 26, 26, 0.85);
+            backdrop-filter: blur(10px);
+            transition: opacity 0.3s ease;
+        }
+
+        .booking-step {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .booking-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .selection-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .selection-card:hover {
+            border-color: rgba(0, 91, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .selection-card.selected {
+            border-color: #005BFF;
+            background: rgba(0, 91, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 91, 255, 0.2);
+        }
+
+        .progress-step {
+            position: relative;
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background: #2d2d2d;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        .progress-step:last-child::after {
+            display: none;
+        }
+
+        .progress-step.active .step-circle {
+            background: #005BFF;
+            border-color: #005BFF;
+            color: white;
+        }
+
+        .progress-step.completed .step-circle {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #2d2d2d;
+            background: #1a1a1a;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .time-slot {
+            transition: all 0.2s;
+        }
+
+        .time-slot:hover:not(.disabled) {
+            background: rgba(0, 91, 255, 0.2);
+            border-color: #005BFF;
+            cursor: pointer;
+        }
+
+        .time-slot.selected {
+            background: #005BFF;
+            color: white;
+            border-color: #005BFF;
+        }
+
+        .time-slot.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="bg-anthracite text-ice">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 lg:px-12 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-electric-blue flex items-center justify-center">
+                        <span class="text-ice font-bold text-xl font-mono">GT</span>
+                    </div>
+                    <span class="text-xl font-bold tracking-wider hidden sm:block">GARAGE TICINO</span>
+                </div>
+                <ul class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
+                    <li><a href="#" data-section="home"
+                            class="nav-link hover:text-electric-blue transition-colors">HOME</a></li>
+                    <li><a href="#" data-section="servizi"
+                            class="nav-link hover:text-electric-blue transition-colors">SERVIZI</a></li>
+                    <li><a href="#" data-section="showroom"
+                            class="nav-link hover:text-electric-blue transition-colors">SHOWROOM</a></li>
+                    <li><a href="#" data-section="contatti"
+                            class="nav-link hover:text-electric-blue transition-colors">CONTATTI</a></li>
+                </ul>
+                <button id="hamburger" class="md:hidden flex flex-col space-y-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-ice transition-all"></span>
+                    <span class="w-6 h-0.5 bg-ice transition-all"></span>
+                    <span class="w-6 h-0.5 bg-ice transition-all"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="fixed top-0 right-0 w-64 h-full bg-anthracite border-l border-electric-blue z-40 transform translate-x-full transition-transform duration-300">
+        <div class="flex flex-col space-y-6 p-8 mt-20">
+            <a href="#" data-section="home"
+                class="mobile-nav-link text-lg font-semibold hover:text-electric-blue transition-colors">HOME</a>
+            <a href="#" data-section="servizi"
+                class="mobile-nav-link text-lg font-semibold hover:text-electric-blue transition-colors">SERVIZI</a>
+            <a href="#" data-section="showroom"
+                class="mobile-nav-link text-lg font-semibold hover:text-electric-blue transition-colors">SHOWROOM</a>
+            <a href="#" data-section="contatti"
+                class="mobile-nav-link text-lg font-semibold hover:text-electric-blue transition-colors">CONTATTI</a>
+        </div>
+    </div>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="section active">
+        <!-- Hero with Ken Burns -->
+        <div class="hero-bg min-h-screen flex items-center justify-center text-center px-6 relative">
+            <div class="hero-bg-image"></div>
+            <div class="hero-overlay"></div>
+            <div class="ghost-text">PRECISION</div>
+            <div class="max-w-4xl relative z-10">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    L'eccellenza meccanica<br>nel cuore di Lugano
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8 font-light">
+                    Precisione svizzera, passione italiana. Dal 1985.
+                </p>
+                <button onclick="openBookingModal()" class="btn-liquid px-8 py-4 text-sm font-bold tracking-widest">
+                    PRENOTA UN CHECK-UP
+                </button>
+            </div>
+        </div>
+
+        <!-- Services Preview with Scanlines -->
+        <div class="bg-light-gray text-anthracite py-20 px-6 scanlines relative">
+            <div class="container mx-auto max-w-6xl relative z-10">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">I Nostri Servizi</h2>
+                <p class="text-center text-gray-600 mb-12 font-mono text-sm">COMPETENZA • TECNOLOGIA • AFFIDABILITÀ</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card-hover bg-ice p-8 gradient-border-light">
+                        <svg class="icon-transition w-16 h-16 mb-4 mx-auto" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <h3 class="text-xl font-bold mb-2 text-center">Officina</h3>
+                        <p class="text-sm text-gray-600 text-center">Manutenzione e riparazione di ogni marca</p>
+                    </div>
+                    <div class="card-hover bg-ice p-8 gradient-border-light">
+                        <svg class="icon-transition w-16 h-16 mb-4 mx-auto" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                            </path>
+                        </svg>
+                        <h3 class="text-xl font-bold mb-2 text-center">Carrozzeria</h3>
+                        <p class="text-sm text-gray-600 text-center">Ripristino estetico e verniciatura</p>
+                    </div>
+                    <div class="card-hover bg-ice p-8 gradient-border-light">
+                        <svg class="icon-transition w-16 h-16 mb-4 mx-auto" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke-width="1.5"></circle>
+                            <circle cx="12" cy="12" r="6" stroke-width="1.5"></circle>
+                            <circle cx="12" cy="12" r="2" stroke-width="1.5"></circle>
+                        </svg>
+                        <h3 class="text-xl font-bold mb-2 text-center">Cambio Gomme</h3>
+                        <p class="text-sm text-gray-600 text-center">Pneumatici premium e deposito stagionale</p>
+                    </div>
+                    <div class="card-hover bg-ice p-8 gradient-border-light">
+                        <svg class="icon-transition w-16 h-16 mb-4 mx-auto" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <h3 class="text-xl font-bold mb-2 text-center">Diagnosi Computerizzata</h3>
+                        <p class="text-sm text-gray-600 text-center">Tecnologia all'avanguardia per ogni problema</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Builder 2.0 - Asymmetric -->
+        <div class="bg-anthracite py-20 px-6 scanlines relative">
+            <div class="container mx-auto max-w-6xl relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-3 img-zoom-container rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1200"
+                            alt="Workshop" class="img-zoom w-full h-96 md:h-full object-cover">
+                    </div>
+                    <div class="md:col-span-2 space-y-8">
+                        <div class="text-center md:text-left">
+                            <svg class="icon-float w-16 h-16 mx-auto md:mx-0 mb-4 text-electric-blue" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                </path>
+                            </svg>
+                            <h3 class="text-2xl font-bold mb-2">Ricambi Originali</h3>
+                            <p class="text-sm text-gray-400 font-mono">100% certificati dal costruttore</p>
+                        </div>
+                        <div class="text-center md:text-left" style="animation-delay: 0.5s;">
+                            <svg class="icon-pulse w-16 h-16 mx-auto md:mx-0 mb-4 text-electric-blue" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                                </path>
+                            </svg>
+                            <h3 class="text-2xl font-bold mb-2">Certificazione Svizzera</h3>
+                            <p class="text-sm text-gray-400 font-mono">Qualità garantita dal 1985</p>
+                        </div>
+                        <div class="text-center md:text-left" style="animation-delay: 1s;">
+                            <svg class="icon-float w-16 h-16 mx-auto md:mx-0 mb-4 text-electric-blue" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3 class="text-2xl font-bold mb-2">Garanzia 24 Mesi</h3>
+                            <p class="text-sm text-gray-400 font-mono">Su tutti gli interventi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIZI SECTION -->
+    <section id="servizi" class="section">
+        <div class="min-h-screen bg-light-gray text-anthracite py-24 px-6 scanlines relative">
+            <div class="container mx-auto max-w-6xl relative z-10">
+                <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">Servizi Completi</h2>
+                <p class="text-center text-gray-600 mb-16 font-mono text-sm">DALLA MANUTENZIONE ORDINARIA ALLA
+                    RIPARAZIONE STRAORDINARIA</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="card-hover bg-ice p-10 gradient-border-light">
+                        <div class="flex items-start space-x-4">
+                            <svg class="icon-transition w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                            </svg>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Officina Meccanica</h3>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li>• Tagliandi e manutenzione programmata</li>
+                                    <li>• Riparazione motore e trasmissione</li>
+                                    <li>• Sostituzione freni e sospensioni</li>
+                                    <li>• Controllo e ricarica climatizzatore</li>
+                                    <li>• Revisione completa veicolo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-ice p-10 gradient-border-light">
+                        <div class="flex items-start space-x-4">
+                            <svg class="icon-transition w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                                </path>
+                            </svg>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Carrozzeria</h3>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li>• Riparazione danni da collisione</li>
+                                    <li>• Verniciatura a forno</li>
+                                    <li>• Lucidatura e detailing</li>
+                                    <li>• Sostituzione cristalli</li>
+                                    <li>• Trattamento antiruggine</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-ice p-10 gradient-border-light">
+                        <div class="flex items-start space-x-4">
+                            <svg class="icon-transition w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke-width="1.5"></circle>
+                                <circle cx="12" cy="12" r="6" stroke-width="1.5"></circle>
+                            </svg>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Pneumatici</h3>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li>• Vendita pneumatici premium</li>
+                                    <li>• Montaggio e bilanciatura</li>
+                                    <li>• Deposito stagionale climatizzato</li>
+                                    <li>• Controllo geometria ruote</li>
+                                    <li>• Riparazione forature</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-ice p-10 gradient-border-light">
+                        <div class="flex items-start space-x-4">
+                            <svg class="icon-transition w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-3">Diagnosi Elettronica</h3>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li>• Diagnosi computerizzata multimarca</li>
+                                    <li>• Lettura e cancellazione errori</li>
+                                    <li>• Riprogrammazione centraline</li>
+                                    <li>• Controllo emissioni</li>
+                                    <li>• Test batteria e alternatore</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWROOM SECTION with Filters -->
+    <section id="showroom" class="section">
+        <div class="min-h-screen bg-anthracite py-24 px-6">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">Vetrina Auto</h2>
+                <p class="text-center text-gray-400 mb-8 font-mono text-sm">SELEZIONE ESCLUSIVA DI VEICOLI PREMIUM</p>
+
+                <!-- Filter Bar -->
+                <div class="flex justify-center gap-4 mb-12 flex-wrap">
+                    <button class="filter-btn active px-6 py-3 text-sm font-bold tracking-wide transition-all"
+                        data-filter="all">TUTTE</button>
+                    <button class="filter-btn px-6 py-3 text-sm font-bold tracking-wide transition-all"
+                        data-filter="sportive">SPORTIVE</button>
+                    <button class="filter-btn px-6 py-3 text-sm font-bold tracking-wide transition-all"
+                        data-filter="suv">SUV</button>
+                    <button class="filter-btn px-6 py-3 text-sm font-bold tracking-wide transition-all"
+                        data-filter="elettriche">ELETTRICHE</button>
+                </div>
+
+                <div class="space-y-8 showroom-container">
+                    <!-- Vehicle 1 - Sportiva -->
+                    <div class="vehicle-card card-hover bg-medium-dark overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-0 gradient-border relative"
+                        data-category="sportive">
+                        <span class="badge badge-available">DISPONIBILE SUBITO</span>
+                        <div class="img-zoom-container">
+                            <img src="C:/Users/fadim/.gemini/antigravity/brain/d3eca493-9e56-44d7-bbe2-febe33b708bb/bmw_m4_competition_1768999749172.png"
+                                alt="BMW M4" class="img-zoom">
+                        </div>
+                        <div class="p-8 flex flex-col justify-center">
+                            <h3 class="text-3xl font-bold mb-2">BMW M4 Competition</h3>
+                            <p class="text-electric-blue font-mono text-sm mb-4">2022 • 15'000 km</p>
+                            <ul class="space-y-2 text-sm text-gray-400 mb-6">
+                                <li>• 510 CV • Cambio automatico 8 rapporti</li>
+                                <li>• Trazione integrale xDrive</li>
+                                <li>• Full optional • Garanzia ufficiale</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-bold">CHF 89'900</span>
+                                <button class="btn-liquid px-6 py-3 text-sm font-bold">DETTAGLI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle 2 - Sportiva -->
+                    <div class="vehicle-card card-hover bg-medium-dark overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-0 gradient-border relative"
+                        data-category="sportive">
+                        <span class="badge badge-incoming">IN ARRIVO</span>
+                        <div class="img-zoom-container">
+                            <img src="C:/Users/fadim/.gemini/antigravity/brain/d3eca493-9e56-44d7-bbe2-febe33b708bb/mercedes_amg_gt_1768999810037.png"
+                                alt="Mercedes AMG" class="img-zoom">
+                        </div>
+                        <div class="p-8 flex flex-col justify-center">
+                            <h3 class="text-3xl font-bold mb-2">Mercedes-AMG GT 63 S</h3>
+                            <p class="text-electric-blue font-mono text-sm mb-4">2021 • 22'000 km</p>
+                            <ul class="space-y-2 text-sm text-gray-400 mb-6">
+                                <li>• 639 CV • V8 Biturbo</li>
+                                <li>• Performance Package Plus</li>
+                                <li>• Burmester Sound • Pelle Nappa</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-bold">CHF 135'000</span>
+                                <button class="btn-liquid px-6 py-3 text-sm font-bold">DETTAGLI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle 3 - Sportiva -->
+                    <div class="vehicle-card card-hover bg-medium-dark overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-0 gradient-border relative"
+                        data-category="sportive">
+                        <span class="badge badge-available">DISPONIBILE SUBITO</span>
+                        <div class="img-zoom-container">
+                            <img src="C:/Users/fadim/.gemini/antigravity/brain/d3eca493-9e56-44d7-bbe2-febe33b708bb/porsche_911_carrera_1768999893118.png"
+                                alt="Porsche 911" class="img-zoom">
+                        </div>
+                        <div class="p-8 flex flex-col justify-center">
+                            <h3 class="text-3xl font-bold mb-2">Porsche 911 Carrera S</h3>
+                            <p class="text-electric-blue font-mono text-sm mb-4">2023 • 8'500 km</p>
+                            <ul class="space-y-2 text-sm text-gray-400 mb-6">
+                                <li>• 450 CV • Boxer 6 cilindri</li>
+                                <li>• Sport Chrono Package</li>
+                                <li>• PASM • Scarichi sportivi</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-bold">CHF 159'900</span>
+                                <button class="btn-liquid px-6 py-3 text-sm font-bold">DETTAGLI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle 4 - SUV -->
+                    <div class="vehicle-card card-hover bg-medium-dark overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-0 gradient-border relative"
+                        data-category="suv">
+                        <span class="badge badge-available">DISPONIBILE SUBITO</span>
+                        <div class="img-zoom-container">
+                            <img src="C:/Users/fadim/.gemini/antigravity/brain/d3eca493-9e56-44d7-bbe2-febe33b708bb/range_rover_sport_1768999958466.png"
+                                alt="Range Rover" class="img-zoom">
+                        </div>
+                        <div class="p-8 flex flex-col justify-center">
+                            <h3 class="text-3xl font-bold mb-2">Range Rover Sport</h3>
+                            <p class="text-electric-blue font-mono text-sm mb-4">2023 • 12'000 km</p>
+                            <ul class="space-y-2 text-sm text-gray-400 mb-6">
+                                <li>• 400 CV • Mild Hybrid</li>
+                                <li>• Trazione integrale permanente</li>
+                                <li>• Meridian Sound • Pelle Windsor</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-bold">CHF 125'000</span>
+                                <button class="btn-liquid px-6 py-3 text-sm font-bold">DETTAGLI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle 5 - Elettrica -->
+                    <div class="vehicle-card card-hover bg-medium-dark overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-0 gradient-border relative"
+                        data-category="elettriche">
+                        <span class="badge badge-incoming">IN ARRIVO</span>
+                        <div class="img-zoom-container">
+                            <img src="C:/Users/fadim/.gemini/antigravity/brain/d3eca493-9e56-44d7-bbe2-febe33b708bb/tesla_model_s_1769000036582.png"
+                                alt="Tesla Model S" class="img-zoom">
+                        </div>
+                        <div class="p-8 flex flex-col justify-center">
+                            <h3 class="text-3xl font-bold mb-2">Tesla Model S Plaid</h3>
+                            <p class="text-electric-blue font-mono text-sm mb-4">2023 • 5'000 km</p>
+                            <ul class="space-y-2 text-sm text-gray-400 mb-6">
+                                <li>• 1020 CV • Tri Motor</li>
+                                <li>• Autonomia 600 km</li>
+                                <li>• Autopilot • Ricarica superfast</li>
+                            </ul>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-bold">CHF 145'000</span>
+                                <button class="btn-liquid px-6 py-3 text-sm font-bold">DETTAGLI</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATTI SECTION -->
+    <section id="contatti" class="section">
+        <div class="min-h-screen bg-light-gray text-anthracite py-24 px-6">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">Contattaci</h2>
+                <p class="text-center text-gray-600 mb-16 font-mono text-sm">SIAMO A TUA DISPOSIZIONE</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="bg-ice p-8 gradient-border-light">
+                        <h3 class="text-2xl font-bold mb-6">Richiedi Informazioni</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Nome e Cognome</label>
+                                <input type="text"
+                                    class="w-full px-4 py-3 border border-gray-300 focus:border-electric-blue focus:outline-none transition-colors"
+                                    placeholder="Mario Rossi">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Email</label>
+                                <input type="email"
+                                    class="w-full px-4 py-3 border border-gray-300 focus:border-electric-blue focus:outline-none transition-colors"
+                                    placeholder="mario.rossi@email.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Telefono</label>
+                                <input type="tel"
+                                    class="w-full px-4 py-3 border border-gray-300 focus:border-electric-blue focus:outline-none transition-colors"
+                                    placeholder="+41 7X XXX XX XX">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Messaggio</label>
+                                <textarea rows="4"
+                                    class="w-full px-4 py-3 border border-gray-300 focus:border-electric-blue focus:outline-none transition-colors"
+                                    placeholder="Come possiamo aiutarti?"></textarea>
+                            </div>
+                            <button type="submit" class="btn-liquid w-full py-4 font-bold tracking-widest">INVIA
+                                RICHIESTA</button>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="bg-ice p-8 gradient-border-light mb-6">
+                            <h3 class="text-2xl font-bold mb-6">Dove Siamo</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <svg class="w-6 h-6 text-electric-blue flex-shrink-0 mt-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold">Indirizzo</p>
+                                        <p class="text-sm text-gray-600">Via Industria 42<br>6900 Lugano, Svizzera</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <svg class="w-6 h-6 text-electric-blue flex-shrink-0 mt-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                        </path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold">Telefono</p>
+                                        <p class="text-sm text-gray-600">+41 91 123 45 67</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <svg class="w-6 h-6 text-electric-blue flex-shrink-0 mt-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold">Email</p>
+                                        <p class="text-sm text-gray-600">info@garageticino.ch</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <svg class="w-6 h-6 text-electric-blue flex-shrink-0 mt-1" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold">Orari</p>
+                                        <p class="text-sm text-gray-600">Lun-Ven: 08:00 - 18:00<br>Sabato: 08:00 - 12:00
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-300 h-64 flex items-center justify-center border-2 border-gray-200">
+                            <p class="text-gray-600 font-mono text-sm">[ GOOGLE MAPS ]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMART BOOKING MODAL -->
+    <div id="bookingModal" class="fixed inset-0 z-[60] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 modal-backdrop" onclick="closeBookingModal()"></div>
+
+        <!-- Modal Content -->
+        <div
+            class="absolute inset-x-0 bottom-0 md:top-1/2 md:left-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 w-full md:w-[800px] h-[85vh] md:h-auto bg-anthracite border border-gray-800 shadow-2xl overflow-hidden flex flex-col md:rounded-2xl">
+
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-800 flex justify-between items-center bg-anthracite z-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-electric-blue flex items-center justify-center rounded">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg tracking-wide">SMART WORKSHOP</h3>
+                        <p class="text-xs text-electric-blue font-mono">CONFIGURATORE INTERATTIVO</p>
+                    </div>
+                </div>
+                <button onclick="closeBookingModal()" class="text-gray-500 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="px-8 py-6 bg-[#1f1f1f]">
+                <div class="flex justify-between max-w-lg mx-auto relative z-0">
+                    <!-- Lines handled by CSS pseudo-elements -->
+                    <div class="progress-step active flex flex-col items-center space-y-2 w-1/4" id="progress-1">
+                        <div
+                            class="step-circle rounded-full flex items-center justify-center font-bold text-xs bg-electric-blue border-electric-blue text-white">
+                            1</div>
+                        <span class="text-xs font-mono uppercase">Servizio</span>
+                    </div>
+                    <div class="progress-step flex flex-col items-center space-y-2 w-1/4" id="progress-2">
+                        <div class="step-circle rounded-full flex items-center justify-center font-bold text-xs">2</div>
+                        <span class="text-xs font-mono uppercase">Veicolo</span>
+                    </div>
+                    <div class="progress-step flex flex-col items-center space-y-2 w-1/4" id="progress-3">
+                        <div class="step-circle rounded-full flex items-center justify-center font-bold text-xs">3</div>
+                        <span class="text-xs font-mono uppercase">Stima</span>
+                    </div>
+                    <div class="progress-step flex flex-col items-center space-y-2 w-1/4" id="progress-4">
+                        <div class="step-circle rounded-full flex items-center justify-center font-bold text-xs">4</div>
+                        <span class="text-xs font-mono uppercase">Data</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Container -->
+            <div class="flex-1 overflow-y-auto p-6 md:p-8 bg-anthracite scroll-smooth relative" id="modal-content">
+
+                <!-- STEP 1: SERVICE -->
+                <div id="step-1" class="booking-step active">
+                    <h4 class="text-2xl font-bold mb-6 text-center">Di cosa ha bisogno la tua auto?</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectService('tagliando', 350)">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-500 group-hover:text-electric-blue transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h5 class="font-bold">Tagliando Completo</h5>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">da CHF 350</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectService('gomme', 120)">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-500 group-hover:text-electric-blue transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h5 class="font-bold">Cambio Gomme</h5>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">da CHF 120</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectService('freni', 450)">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-500 group-hover:text-electric-blue transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h5 class="font-bold">Impianto Frenante</h5>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">da CHF 450</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectService('diagnosi', 80)">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-500 group-hover:text-electric-blue transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <h5 class="font-bold">Diagnosi Elettronica</h5>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">da CHF 80</p>
+                        </div>
+                        <!-- More options... -->
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectService('altro', 0)">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-500 group-hover:text-electric-blue transition-colors"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <h5 class="font-bold">Altro / Consulenza</h5>
+                            <p class="text-xs text-gray-500 mt-1 font-mono">Su preventivo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: VEHICLE -->
+                <div id="step-2" class="booking-step">
+                    <button onclick="changeStep(1)"
+                        class="mb-4 text-xs text-gray-500 hover:text-white flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        INDIETRO
+                    </button>
+                    <h4 class="text-2xl font-bold mb-6 text-center">Che veicolo possiedi?</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectVehicle('citycar', 0.9)">
+                            <div
+                                class="h-10 mb-3 flex items-center justify-center text-gray-500 group-hover:text-electric-blue transition-colors">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M5 10l2-2h10l2 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M12 18v-4" />
+                                </svg>
+                            </div>
+                            <h5 class="font-bold">City Car</h5>
+                            <p class="text-xs text-gray-500 mt-1">Compatta</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectVehicle('berlina', 1.0)">
+                            <div
+                                class="h-10 mb-3 flex items-center justify-center text-gray-500 group-hover:text-electric-blue transition-colors">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M5 10l2-3h10l2 3v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M4 14h16" />
+                                </svg>
+                            </div>
+                            <h5 class="font-bold">Berlina / Station</h5>
+                            <p class="text-xs text-gray-500 mt-1">Standard</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectVehicle('suv', 1.2)">
+                            <div
+                                class="h-10 mb-3 flex items-center justify-center text-gray-500 group-hover:text-electric-blue transition-colors">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M3 10l2-2h14l2 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M3 14h18" />
+                                </svg>
+                            </div>
+                            <h5 class="font-bold">SUV / 4x4</h5>
+                            <p class="text-xs text-gray-500 mt-1">+20%</p>
+                        </div>
+                        <div class="selection-card p-6 rounded-xl cursor-pointer text-center group"
+                            onclick="selectVehicle('sportiva', 1.5)">
+                            <div
+                                class="h-10 mb-3 flex items-center justify-center text-gray-500 group-hover:text-electric-blue transition-colors">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h5 class="font-bold">Sportiva</h5>
+                            <p class="text-xs text-gray-500 mt-1">+50%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: ESTIMATE -->
+                <div id="step-3" class="booking-step">
+                    <button onclick="changeStep(2)"
+                        class="mb-4 text-xs text-gray-500 hover:text-white flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        INDIETRO
+                    </button>
+                    <div class="text-center py-8">
+                        <p class="text-gray-400 mb-2 uppercase tracking-widest text-xs">Stima Preventivo</p>
+                        <h4 class="text-6xl font-bold mb-4 font-mono text-electric-blue" id="estimated-price">CHF 0</h4>
+                        <p class="text-sm text-gray-500 mb-8 max-w-md mx-auto">*Il prezzo è indicativo e verrà
+                            confermato dopo l'ispezione in officina. Include manodopera e IVA.</p>
+
+                        <div class="bg-black/30 p-6 rounded-lg max-w-md mx-auto border border-gray-800 mb-8">
+                            <div class="flex justify-between mb-2 text-sm">
+                                <span class="text-gray-400">Servizio:</span>
+                                <span class="font-bold" id="summary-service">-</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Veicolo:</span>
+                                <span class="font-bold" id="summary-vehicle">-</span>
+                            </div>
+                        </div>
+
+                        <button onclick="changeStep(4)" class="btn-liquid px-8 py-4 font-bold tracking-widest">
+                            SCEGLI LA DATA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: CALENDAR -->
+                <div id="step-4" class="booking-step">
+                    <button onclick="changeStep(3)"
+                        class="mb-4 text-xs text-gray-500 hover:text-white flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        INDIETRO
+                    </button>
+                    <h4 class="text-2xl font-bold mb-6 text-center">Disponibilità Officina</h4>
+
+                    <!-- Calendar Grid -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <h5 class="font-bold text-lg">Prossima Settimana</h5>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 bg-anthracite border border-electric-blue rounded-sm"></div> <span
+                                    class="text-xs text-gray-400">Libero</span>
+                                <div class="w-3 h-3 bg-gray-700/30 rounded-sm ml-2"></div> <span
+                                    class="text-xs text-gray-400">Occupato</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-3 md:grid-cols-5 gap-3 text-center mb-2 text-xs font-mono text-gray-500">
+                            <div>LUN</div>
+                            <div>MAR</div>
+                            <div>MER</div>
+                            <div>GIO</div>
+                            <div>VEN</div>
+                        </div>
+
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-3" id="calendar-grid">
+                            <!-- JS Generated Slots -->
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-800 pt-6">
+                        <form id="booking-form" onsubmit="submitBooking(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <input type="text" placeholder="Nome" required
+                                    class="bg-black/30 border border-gray-700 rounded p-3 text-sm focus:border-electric-blue outline-none transition-colors">
+                                <input type="tel" placeholder="Telefono" required
+                                    class="bg-black/30 border border-gray-700 rounded p-3 text-sm focus:border-electric-blue outline-none transition-colors">
+                            </div>
+                            <button type="submit" class="btn-liquid w-full py-4 font-bold tracking-widest">CONFERMA
+                                PRENOTAZIONE</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // BOOKING SYSTEM LOGIC
+        const bookingState = {
+            step: 1,
+            service: null,
+            basePrice: 0,
+            vehicle: null,
+            multiplier: 1,
+            date: null,
+            time: null
+        };
+
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetBooking();
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.booking-step').forEach(el => el.classList.remove('active'));
+            // Show new step
+            document.getElementById(`step-${step}`).classList.add('active');
+
+            // Update Progress Bar
+            bookingState.step = step;
+            updateProgressBar(step);
+
+            // If going to Step 3, calculate price
+            if (step === 3) {
+                calculatePrice();
+            }
+            // If going to Step 4, render calendar if needed
+            if (step === 4) {
+                renderCalendar();
+            }
+        }
+
+        function updateProgressBar(currentStep) {
+            for (let i = 1; i <= 4; i++) {
+                const el = document.getElementById(`progress-${i}`);
+                el.classList.remove('active', 'completed');
+
+                if (i < currentStep) {
+                    el.classList.add('completed');
+                } else if (i === currentStep) {
+                    el.classList.add('active');
+                }
+            }
+        }
+
+        function selectService(serviceName, price) {
+            bookingState.service = serviceName;
+            bookingState.basePrice = price;
+
+            // Highlight selected card logic would go here (simplified for now)
+            // Move to next step
+            changeStep(2);
+        }
+
+        function selectVehicle(vehicleType, multiplier) {
+            bookingState.vehicle = vehicleType;
+            bookingState.multiplier = multiplier;
+            changeStep(3);
+        }
+
+        function calculatePrice() {
+            const finalPrice = Math.round(bookingState.basePrice * bookingState.multiplier);
+
+            // Format elements
+            document.getElementById('estimated-price').innerText = `CHF ${finalPrice}`;
+            document.getElementById('summary-service').innerText = bookingState.service.toUpperCase();
+            document.getElementById('summary-vehicle').innerText = bookingState.vehicle.toUpperCase();
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = ''; // Clear existing content/comments
+
+            const times = ['08:00', '10:00', '14:00', '16:00'];
+            const days = 5; // Mon-Fri
+
+            let html = '';
+            for (let d = 0; d < days; d++) {
+                html += '<div class="space-y-2">';
+                times.forEach(time => {
+                    // Randomly disable some slots for realism
+                    const isBusy = Math.random() > 0.7;
+                    const cleanTime = time.replace(':', '');
+
+                    if (isBusy) {
+                        html += `<div class="p-2 rounded border border-transparent bg-gray-800/50 text-gray-600 text-xs text-center disabled  font-mono line-through cursor-not-allowed">${time}</div>`;
+                    } else {
+                        html += `<div onclick="selectTime(this, '${d}', '${time}')" class="time-slot p-2 rounded border border-gray-700 bg-black/40 text-ice text-xs text-center font-mono hover:bg-electric-blue/20 transition-colors cursor-pointer">${time}</div>`;
+                    }
+                });
+                html += '</div>';
+            }
+            grid.innerHTML = html;
+        }
+
+        function selectTime(el, day, time) {
+            // Deselect all
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected', 'bg-electric-blue', 'border-electric-blue');
+                if (!slot.classList.contains('disabled')) slot.classList.add('border-gray-700', 'bg-black/40');
+            });
+
+            // Select current
+            el.classList.remove('border-gray-700', 'bg-black/40');
+            el.classList.add('selected', 'bg-electric-blue', 'border-electric-blue');
+
+            bookingState.date = `Day ${day}`;
+            bookingState.time = time;
+        }
+
+        function submitBooking(e) {
+            e.preventDefault();
+            if (!bookingState.time) {
+                alert("Per favore seleziona un orario.");
+                return;
+            }
+            alert(`Prenotazione Confermata!\n\nServizio: ${bookingState.service}\nVeicolo: ${bookingState.vehicle}\nOrario: ${bookingState.time}`);
+            closeBookingModal();
+        }
+
+        function resetBooking() {
+            bookingState.step = 1;
+            changeStep(1);
+            // Clear selections visually if implemented
+        }
+    </script>
+
+    <!-- Footer Completo -->
+    <footer class="bg-anthracite border-t border-electric-blue py-16 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Column 1: Logo & Motto -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-12 h-12 bg-electric-blue flex items-center justify-center">
+                            <span class="text-ice font-bold text-xl font-mono">GT</span>
+                        </div>
+                        <span class="text-xl font-bold tracking-wider">GARAGE TICINO</span>
+                    </div>
+                    <p class="text-sm text-gray-400 italic mb-4">Finis Coronat Opus</p>
+                    <p class="text-xs text-gray-500">L'eccellenza meccanica nel cuore di Lugano dal 1985.</p>
+                </div>
+
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="text-sm font-bold tracking-widest mb-4 text-electric-blue">NAVIGAZIONE</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" data-section="home"
+                                class="footer-link text-gray-400 hover:text-electric-blue transition-colors">Home</a>
+                        </li>
+                        <li><a href="#" data-section="servizi"
+                                class="footer-link text-gray-400 hover:text-electric-blue transition-colors">Servizi</a>
+                        </li>
+                        <li><a href="#" data-section="showroom"
+                                class="footer-link text-gray-400 hover:text-electric-blue transition-colors">Showroom</a>
+                        </li>
+                        <li><a href="#" data-section="contatti"
+                                class="footer-link text-gray-400 hover:text-electric-blue transition-colors">Contatti</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-electric-blue transition-colors">Privacy
+                                Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact Info -->
+                <div>
+                    <h3 class="text-sm font-bold tracking-widest mb-4 text-electric-blue">CONTATTI</h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start space-x-2">
+                            <svg class="w-4 h-4 text-electric-blue flex-shrink-0 mt-0.5" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Via Industria 42<br>6900 Lugano</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-electric-blue flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <span>+41 91 123 45 67</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-electric-blue flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span>info@garageticino.ch</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div>
+                    <h3 class="text-sm font-bold tracking-widest mb-4 text-electric-blue">NEWSLETTER</h3>
+                    <p class="text-xs text-gray-400 mb-4">Iscriviti per ricevere offerte esclusive e novità</p>
+                    <form class="space-y-3">
+                        <input type="email" placeholder="La tua email"
+                            class="w-full px-4 py-2 bg-medium-dark border border-gray-700 text-sm text-ice placeholder-gray-500 focus:border-electric-blue focus:outline-none transition-colors">
+                        <button type="submit"
+                            class="btn-liquid w-full py-2 text-xs font-bold tracking-widest">ISCRIVITI</button>
+                    </form>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-500 hover:text-electric-blue transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-electric-blue transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-electric-blue transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div
+                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="font-mono text-xs text-gray-500">© 2026 Garage Ticino. Tutti i diritti riservati.</p>
+                <div class="flex space-x-6 text-xs text-gray-500">
+                    <a href="#" class="hover:text-electric-blue transition-colors">Termini di Servizio</a>
+                    <a href="#" class="hover:text-electric-blue transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-electric-blue transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
+        });
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+        });
+
+        // SPA Navigation
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .footer-link');
+        const sections = document.querySelectorAll('.section');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetSection = link.getAttribute('data-section');
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                mobileMenu.classList.add('translate-x-full');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Filter System
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const vehicleCards = document.querySelectorAll('.vehicle-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-electric-blue', 'text-white');
+                    b.classList.add('border', 'border-electric-blue', 'text-electric-blue');
+                });
+                btn.classList.add('active', 'bg-electric-blue', 'text-white');
+                btn.classList.remove('border', 'border-electric-blue', 'text-electric-blue');
+
+                // Filter vehicles
+                vehicleCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Initialize first filter button
+        filterBtns[0].classList.add('bg-electric-blue', 'text-white');
+
+        // Form validation
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Grazie per averci contattato! Ti risponderemo al più presto.');
+                form.reset();
+            });
+        }
+    </script>
+</body>
+
+</html>

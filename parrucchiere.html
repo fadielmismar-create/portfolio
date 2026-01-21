@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIGO Hair Concept | Luxury Hair Salon Lugano</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Inter:wght@100;200;300;400;500&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #000000;
+            overflow-x: hidden;
+        }
+
+
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Grayscale to Color Effect */
+        .grayscale-hover {
+            filter: grayscale(100%);
+            transition: filter 0.6s ease;
+        }
+
+        .grayscale-hover:hover {
+            filter: grayscale(0%);
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+        }
+
+        /* Asymmetric Grid */
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+        }
+
+        .grid-item-1 {
+            grid-column: 1 / 6;
+            grid-row: 1 / 3;
+        }
+
+        .grid-item-2 {
+            grid-column: 6 / 10;
+            grid-row: 1 / 2;
+        }
+
+        .grid-item-3 {
+            grid-column: 10 / 13;
+            grid-row: 1 / 3;
+        }
+
+        .grid-item-4 {
+            grid-column: 6 / 9;
+            grid-row: 2 / 3;
+        }
+
+        .grid-item-5 {
+            grid-column: 9 / 13;
+            grid-row: 3 / 4;
+        }
+
+        .grid-item-6 {
+            grid-column: 1 / 5;
+            grid-row: 3 / 4;
+        }
+
+        /* Mobile Grid - Full Screen Instagram Feed Style */
+        @media (max-width: 768px) {
+            .asymmetric-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                margin-left: -1.5rem;
+                margin-right: -1.5rem;
+            }
+
+            .asymmetric-grid>div {
+                width: 100vw;
+                min-height: 80vh;
+                height: auto;
+            }
+
+            .asymmetric-grid img {
+                width: 100%;
+                min-height: 80vh;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .asymmetric-grid .absolute {
+                opacity: 1 !important;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+                padding: 2rem 1.5rem;
+            }
+
+            .asymmetric-grid h3 {
+                font-size: 1.875rem !important;
+            }
+        }
+
+        /* Hero Text Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        /* Navbar Scroll Effect */
+        nav.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Editorial Grid */
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .editorial-card-1 {
+            grid-column: 1 / 7;
+            min-height: 600px;
+        }
+
+        .editorial-card-2 {
+            grid-column: 7 / 13;
+            min-height: 600px;
+        }
+
+        @media (max-width: 768px) {
+            .editorial-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .editorial-card-1,
+            .editorial-card-2 {
+                grid-column: 1 / -1;
+                min-height: 500px;
+            }
+
+            .editorial-card-2 {
+                padding: 3rem 2rem;
+            }
+
+            .editorial-card-2 p {
+                font-size: 1.5rem;
+            }
+
+            .editorial-card-1 h3 {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Hero Title - Responsive */
+        .hero-title {
+            font-size: clamp(2.5rem, 12vw, 9rem);
+            line-height: 0.95;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: manual;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: clamp(2.25rem, 13vw, 4rem);
+                line-height: 1.05;
+                max-width: 100%;
+                padding-right: 0.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: clamp(1.875rem, 14vw, 3.5rem);
+                line-height: 1.1;
+                word-break: keep-all;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: clamp(1.75rem, 12vw, 3rem);
+                line-height: 1.15;
+            }
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 10vw, 5rem);
+            line-height: 1.1;
+        }
+
+        @media (max-width: 640px) {
+            .section-title {
+                font-size: clamp(1.75rem, 12vw, 3rem);
+            }
+        }
+
+        /* Newsletter Input Minimal */
+        .newsletter-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #FFFFFF;
+            color: #FFFFFF;
+            padding: 0.75rem 0;
+            outline: none;
+            transition: border-color 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .newsletter-input:focus {
+            border-bottom-color: #999999;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            /* Navbar mobile */
+            nav .container {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            /* Hero mobile */
+            #hero {
+                min-height: 100vh;
+                padding-top: 5rem;
+            }
+
+            #hero .container {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+
+            /* Sections spacing */
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            /* Footer mobile */
+            footer {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            footer .grid {
+                gap: 2.5rem;
+            }
+
+            footer h2 {
+                font-size: 3rem;
+            }
+
+            /* Modal mobile */
+            #booking-modal .bg-white {
+                margin: 1rem;
+                max-height: calc(100vh - 2rem);
+            }
+
+            #booking-modal .p-8 {
+                padding: 1.5rem;
+            }
+
+            #booking-modal h3 {
+                font-size: 2rem;
+            }
+
+            #booking-modal .space-y-8>*+* {
+                margin-top: 1.5rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 375px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            footer h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
+            <a href="#hero" class="text-2xl md:text-3xl font-serif tracking-wider interactive-element">VERTIGO</a>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex items-center space-x-8 text-xs tracking-[0.2em] uppercase font-sans font-light">
+                <li><a href="#lookbook" class="interactive-element hover:opacity-50 transition-opacity">Lookbook</a>
+                </li>
+                <li><a href="#expertise" class="interactive-element hover:opacity-50 transition-opacity">Servizi</a>
+                </li>
+                <li><a href="#editorial" class="interactive-element hover:opacity-50 transition-opacity">Editorial</a>
+                </li>
+                <li><a href="#contact" class="interactive-element hover:opacity-50 transition-opacity">Contatti</a></li>
+            </ul>
+
+            <button onclick="openBookingModal()"
+                class="interactive-element bg-black text-white px-6 md:px-8 py-3 text-xs tracking-[0.2em] uppercase font-sans font-light hover:bg-white hover:text-black border-2 border-black transition-all">
+                Prenota
+            </button>
+
+            <!-- Mobile Hamburger -->
+            <button onclick="toggleMobileMenu()" class="md:hidden interactive-element">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white z-[100] transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-8">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 interactive-element">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <a href="#hero" onclick="toggleMobileMenu()" class="text-3xl font-serif interactive-element">Home</a>
+        <a href="#lookbook" onclick="toggleMobileMenu()" class="text-3xl font-serif interactive-element">Lookbook</a>
+        <a href="#expertise" onclick="toggleMobileMenu()" class="text-3xl font-serif interactive-element">Servizi</a>
+        <a href="#editorial" onclick="toggleMobileMenu()" class="text-3xl font-serif interactive-element">Editorial</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-3xl font-serif interactive-element">Contatti</a>
+        <button onclick="openBookingModal(); toggleMobileMenu();"
+            class="interactive-element bg-black text-white px-10 py-4 text-sm tracking-[0.2em] uppercase">Prenota
+            Ora</button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-start overflow-hidden bg-black">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=1920&q=80"
+                alt="High Fashion Hair Model" class="w-full h-full object-cover grayscale opacity-70">
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 md:px-12 py-32">
+            <div class="max-w-6xl animate-fade-in-up">
+                <h1 class="text-white font-serif hero-title mb-8 tracking-tight">
+                    LO STILE<br>È UN<br><span class="italic">ATTEGGIAMENTO</span>
+                </h1>
+                <p class="text-white/80 font-sans font-extralight text-lg md:text-xl tracking-wide max-w-md mb-12">
+                    Eleva il tuo look nello studio hair concept più esclusivo di Lugano
+                </p>
+                <button onclick="openBookingModal()"
+                    class="interactive-element bg-white text-black px-10 py-4 text-xs tracking-[0.3em] uppercase font-sans hover:bg-black hover:text-white border-2 border-white transition-all">
+                    Scopri il Tuo Stile
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE LOOKBOOK (Gallery) -->
+    <section id="lookbook" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="mb-16 text-center md:text-left">
+                <h2 class="section-title font-serif tracking-tight mb-4">THE LOOKBOOK</h2>
+                <p class="text-sm tracking-[0.2em] uppercase font-sans font-light">Le Nostre Ultime Creazioni</p>
+            </div>
+
+            <div class="asymmetric-grid">
+                <div class="grid-item-1 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&q=80" alt="Cut 1"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-2xl font-serif">Taglio Precision</h3>
+                    </div>
+                </div>
+
+                <div class="grid-item-2 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80" alt="Color 1"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-xl font-serif">Biondo Platino</h3>
+                    </div>
+                </div>
+
+                <div class="grid-item-3 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&q=80" alt="Style 1"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-xl font-serif">Onde Editorial</h3>
+                    </div>
+                </div>
+
+                <div class="grid-item-4 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80" alt="Cut 2"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-xl font-serif">Bob Moderno</h3>
+                    </div>
+                </div>
+
+                <div class="grid-item-5 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=800&q=80" alt="Color 2"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-2xl font-serif">Arte Balayage</h3>
+                    </div>
+                </div>
+
+                <div class="grid-item-6 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=800&q=80" alt="Style 2"
+                        class="w-full h-full object-cover grayscale-hover">
+                    <div
+                        class="absolute bottom-0 left-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-2xl font-serif">Layers Texturizzati</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTISE (Services) -->
+    <section id="expertise" class="py-20 md:py-32 bg-black text-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title font-serif tracking-tight mb-20 text-center">I NOSTRI SERVIZI</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+                    <!-- Taglio -->
+                    <div class="border-t border-white/20 pt-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-3xl md:text-4xl font-serif">TAGLIO</h3>
+                            <span class="text-sm font-sans font-extralight tracking-[0.2em]">DA CHF 120</span>
+                        </div>
+                        <p class="font-sans font-extralight text-white/70 leading-relaxed">
+                            Taglio di precisione su misura per la forma del tuo viso e il tuo stile di vita. Ogni taglio
+                            è un'opera d'arte.
+                        </p>
+                    </div>
+
+                    <!-- Colore -->
+                    <div class="border-t border-white/20 pt-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-3xl md:text-4xl font-serif">COLORE</h3>
+                            <span class="text-sm font-sans font-extralight tracking-[0.2em]">DA CHF 180</span>
+                        </div>
+                        <p class="font-sans font-extralight text-white/70 leading-relaxed">
+                            Dal balayage sottile alle trasformazioni audaci. Utilizziamo solo linee di colore premium e
+                            sostenibili.
+                        </p>
+                    </div>
+
+                    <!-- Styling -->
+                    <div class="border-t border-white/20 pt-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-3xl md:text-4xl font-serif">STYLING</h3>
+                            <span class="text-sm font-sans font-extralight tracking-[0.2em]">DA CHF 80</span>
+                        </div>
+                        <p class="font-sans font-extralight text-white/70 leading-relaxed">
+                            Piega editorial, acconciature e styling per occasioni speciali per l'individuo moderno.
+                        </p>
+                    </div>
+
+                    <!-- Trattamenti -->
+                    <div class="border-t border-white/20 pt-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-3xl md:text-4xl font-serif">TRATTAMENTI</h3>
+                            <span class="text-sm font-sans font-extralight tracking-[0.2em]">DA CHF 90</span>
+                        </div>
+                        <p class="font-sans font-extralight text-white/70 leading-relaxed">
+                            Cheratina riparatrice, bond repair e trattamenti cuoio capelluto di lusso per la massima
+                            salute dei capelli.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-20 text-center">
+                    <button onclick="openBookingModal()"
+                        class="interactive-element bg-white text-black px-12 py-4 text-xs tracking-[0.3em] uppercase font-sans hover:bg-transparent hover:text-white border-2 border-white transition-all">
+                        Prenota la Tua Sessione
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDITORIAL SECTION (NEW - Vogue Style) -->
+    <section id="editorial" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="mb-16 text-center">
+                <h2 class="section-title font-serif tracking-tight mb-4">EDITORIAL</h2>
+                <p class="text-sm tracking-[0.2em] uppercase font-sans font-light">Visione & Ispirazione</p>
+            </div>
+
+            <div class="editorial-grid">
+                <!-- Card 1: TRENDS 2026 -->
+                <div class="editorial-card-1 relative overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1200&q=80"
+                        alt="Trends 2026" class="w-full h-full object-cover grayscale-hover">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="text-white text-6xl md:text-8xl font-serif tracking-tight opacity-90">TRENDS<br>2026
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Card 2: Creative Director Quote -->
+                <div class="editorial-card-2 bg-black text-white flex items-center justify-center p-12 md:p-16">
+                    <div class="max-w-md">
+                        <p class="text-2xl md:text-3xl font-serif italic leading-relaxed mb-8">
+                            "Lo stile non è ciò che indossi. È come porti te stesso nel mondo."
+                        </p>
+                        <div class="border-t border-white/20 pt-6">
+                            <p class="text-sm tracking-[0.2em] uppercase font-sans font-light">Marco Bellini</p>
+                            <p class="text-xs tracking-[0.2em] uppercase font-sans font-extralight text-white/60 mt-1">
+                                Direttore Creativo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER MONUMENTALE 'THE BLACK BOX' -->
+    <footer id="contact" class="py-20 md:py-32 bg-black text-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-16">
+                <!-- Column 1: Brand -->
+                <div class="md:col-span-1">
+                    <h2 class="text-6xl md:text-7xl font-serif mb-6 tracking-tight text-white">VERTIGO</h2>
+                    <p class="font-sans font-extralight text-gray-400 italic text-lg">
+                        Eleviamo lo Stile<br>dal 2010
+                    </p>
+                </div>
+
+                <!-- Column 2: Links -->
+                <div>
+                    <h4 class="text-xs tracking-[0.3em] uppercase font-sans mb-6 text-gray-500">Links</h4>
+                    <div class="flex flex-col space-y-4 text-lg font-sans font-extralight">
+                        <a href="#lookbook"
+                            class="interactive-element hover:text-gray-400 transition-colors">Lookbook</a>
+                        <a href="#expertise"
+                            class="interactive-element hover:text-gray-400 transition-colors">Servizi</a>
+                        <a href="#" onclick="openBookingModal(); return false;"
+                            class="interactive-element hover:text-gray-400 transition-colors">Appuntamenti</a>
+                        <a href="#" class="interactive-element hover:text-gray-400 transition-colors">Privacy</a>
+                    </div>
+                </div>
+
+                <!-- Column 3: Contatti -->
+                <div>
+                    <h4 class="text-xs tracking-[0.3em] uppercase font-sans mb-6 text-gray-500">Contatti</h4>
+                    <p class="font-sans font-extralight text-lg leading-relaxed text-gray-300 mb-6">
+                        Via Nassa 28<br>
+                        6900 Lugano<br>
+                        Switzerland
+                    </p>
+                    <p class="font-sans font-extralight text-lg leading-relaxed text-gray-300">
+                        +41 91 234 56 78<br>
+                        info@vertigohair.ch
+                    </p>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div>
+                    <h4 class="text-xs tracking-[0.3em] uppercase font-sans mb-6 text-gray-500">JOIN THE CIRCLE</h4>
+                    <p class="font-sans font-extralight text-sm leading-relaxed mb-6 text-gray-400">
+                        Accesso esclusivo a tendenze, eventi e appuntamenti prioritari.
+                    </p>
+                    <form class="space-y-6"
+                        onsubmit="event.preventDefault(); alert('✨ Benvenuto in The Vertigo Circle!');">
+                        <input type="email" required placeholder="La tua email"
+                            class="newsletter-input w-full text-sm font-sans font-light">
+                        <button type="submit"
+                            class="interactive-element text-xs tracking-[0.3em] uppercase font-sans text-gray-400 hover:text-white transition-colors">
+                            Iscriviti →
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 text-center">
+                <p class="text-xs tracking-[0.2em] uppercase font-sans font-light text-gray-600">
+                    &copy; 2026 VERTIGO Hair Concept. Progettato per gli Audaci.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOOKING MODAL -->
+    <div id="booking-modal"
+        class="fixed inset-0 bg-black/80 modal-backdrop z-[200] hidden items-center justify-center p-4">
+        <div class="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8 md:p-12">
+                <!-- Header -->
+                <div class="flex justify-between items-start mb-12">
+                    <h3 class="text-4xl md:text-5xl font-serif tracking-tight">PRENOTA ORA</h3>
+                    <button onclick="closeBookingModal()"
+                        class="interactive-element hover:opacity-50 transition-opacity">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Booking Form -->
+                <form class="space-y-8" onsubmit="event.preventDefault(); confirmBooking();">
+                    <!-- Stylist Selection -->
+                    <div>
+                        <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Seleziona
+                            Stilista</label>
+                        <select required
+                            class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                            <option value="">Scegli il tuo stilista</option>
+                            <option value="marco">Marco Bellini - Direttore Creativo</option>
+                            <option value="sofia">Sofia Rossi - Colorista Senior</option>
+                            <option value="luca">Luca Ferrari - Stilista Master</option>
+                            <option value="elena">Elena Conti - Specialista Taglio</option>
+                        </select>
+                    </div>
+
+                    <!-- Service Selection -->
+                    <div>
+                        <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Servizio</label>
+                        <select required
+                            class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                            <option value="">Scegli il tuo servizio</option>
+                            <option value="cut">Taglio (da CHF 120)</option>
+                            <option value="color">Colore (da CHF 180)</option>
+                            <option value="styling">Styling (da CHF 80)</option>
+                            <option value="treatment">Trattamento (da CHF 90)</option>
+                            <option value="cut-color">Taglio + Colore (da CHF 280)</option>
+                        </select>
+                    </div>
+
+                    <!-- Date & Time -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Data</label>
+                            <input type="date" required
+                                class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Orario</label>
+                            <select required
+                                class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                                <option value="">Seleziona orario</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Personal Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Nome</label>
+                            <input type="text" required
+                                class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Email</label>
+                            <input type="email" required
+                                class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Telefono</label>
+                        <input type="tel" required
+                            class="w-full border-2 border-black px-4 py-5 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs tracking-[0.2em] uppercase font-sans mb-4">Richieste Speciali
+                            (Opzionale)</label>
+                        <textarea rows="3"
+                            class="w-full border-2 border-black px-4 py-4 text-base font-sans font-light focus:outline-none focus:border-gray-600 transition-colors"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="interactive-element w-full bg-black text-white py-6 text-xs tracking-[0.3em] uppercase font-sans hover:bg-white hover:text-black border-2 border-black transition-all">
+                        Conferma Appuntamento
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Custom Cursor with Lens Effect - FIXED
+        const cursor = document.getElementById('custom-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Lens Effect on Interactive Elements
+        const interactiveElements = document.querySelectorAll('.interactive-element, a, button, select, input, textarea');
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover-effect');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover-effect');
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Booking Modal
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.getElementById('booking-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.getElementById('booking-modal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmBooking() {
+            alert('✂️ La tua richiesta di appuntamento è stata inviata! Ti contatteremo a breve per confermare.');
+            closeBookingModal();
+        }
+
+        // Set minimum date to today
+        const dateInputs = document.querySelectorAll('input[type="date"]');
+        dateInputs.forEach(input => {
+            const today = new Date().toISOString().split('T')[0];
+            input.setAttribute('min', today);
+        });
+    </script>
+
+</body>
+
+</html>
